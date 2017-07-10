@@ -236,9 +236,10 @@ func (c *AssetClass) UpdateAsset(stub shim.ChaincodeStubInterface, args []string
 		return nil, err
 	}
 	if !exists {
-		if CanCreateOnFirstUpdate(stub) {
-			return c.CreateAsset(stub, args, caller, inject)
-		}
+		//Nihal: Disable creating asset with updateAsset transaction if asset does not exist
+		//if CanCreateOnFirstUpdate(stub) {
+		//	return c.CreateAsset(stub, args, caller, inject)
+		//}
 		err := fmt.Errorf("UpdateAsset for class %s asset %s asset does not exist", c.Name, assetKey)
 		log.Errorf(err.Error())
 		return nil, err
