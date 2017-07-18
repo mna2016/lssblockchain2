@@ -521,7 +521,7 @@ func (c AssetClass) ReadAllAssetsUnmarshalled(stub shim.ChaincodeStubInterface, 
 // UpdateAsset updates an asset and stores it in world state
 func (c *AssetClass) UpdateTranCert(stub shim.ChaincodeStubInterface, args []string, caller string, inject []QPropNV) ([]byte, error) {
 
-	fmt.printf("In UpdateTranCert")
+	fmt.Printf("In UpdateTranCert")
 	
 	var arg = c.NewAsset()
 	var a = c.NewAsset()
@@ -578,7 +578,7 @@ func (c *AssetClass) UpdateTranCert(stub shim.ChaincodeStubInterface, args []str
 // ReadAsset returns an asset from world state, intended to be returned directly to a client
 func (c *AssetClass) ReadTranCert(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	
-	fmt.printf("In ReadTranCert")
+	fmt.Printf("In ReadTranCert")
 	
 	var arg = c.NewAsset()
 
@@ -672,7 +672,7 @@ var readTranCertDefault ChaincodeFunc = func(stub shim.ChaincodeStubInterface, a
 // RegisterDefaultRoutes registers the basic crud API for the simplest possible contract
 func RegisterDefaultRoutes() {
 	
-		fmt.printf("ABOUT TO ADD ALL METHODS TO ROUTER #1")
+		fmt.Printf("ABOUT TO ADD ALL METHODS TO ROUTER in ctasset.go")
 	AddRoute("createAsset", "invoke", DefaultClass, createAssetDefault)
 	AddRoute("replaceAsset", "invoke", DefaultClass, replaceAssetDefault)
 	AddRoute("updateAsset", "invoke", DefaultClass, updateAssetDefault)
