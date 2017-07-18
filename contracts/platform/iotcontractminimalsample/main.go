@@ -20,7 +20,8 @@ package main
 
 import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	iot "github.com/ibm-watson-iot/blockchain-samples/contracts/platform/iotcontractplatform"
+	//iot "github.com/ibm-watson-iot/blockchain-samples/contracts/platform/iotcontractplatform"
+	iot "github.com/mna2016/lssblockchain2/contracts/platform/iotcontractplatform"
 )
 
 // Update the path to match your configuration
