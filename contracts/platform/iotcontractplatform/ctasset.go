@@ -671,6 +671,8 @@ var readTranCertDefault ChaincodeFunc = func(stub shim.ChaincodeStubInterface, a
 
 // RegisterDefaultRoutes registers the basic crud API for the simplest possible contract
 func RegisterDefaultRoutes() {
+	
+		fmt.printf("ABOUT TO ADD ALL METHODS TO ROUTER #1")
 	AddRoute("createAsset", "invoke", DefaultClass, createAssetDefault)
 	AddRoute("replaceAsset", "invoke", DefaultClass, replaceAssetDefault)
 	AddRoute("updateAsset", "invoke", DefaultClass, updateAssetDefault)
