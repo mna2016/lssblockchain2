@@ -517,7 +517,7 @@ func (c AssetClass) ReadAllAssetsUnmarshalled(stub shim.ChaincodeStubInterface, 
 }
 
 
-//** begin PDF cert change 
+/* begin PDF cert change 
 // UpdateAsset updates an asset and stores it in world state
 func (c *AssetClass) UpdateTranCert(stub shim.ChaincodeStubInterface, args []string, caller string, inject []QPropNV) ([]byte, error) {
 
@@ -608,7 +608,7 @@ func (c *AssetClass) ReadTranCert(stub shim.ChaincodeStubInterface, args []strin
 }
 
 
-//** end PDF cert change
+//** end PDF cert change*/
 
 //********** default API ***********
 
@@ -660,19 +660,19 @@ var readAllAssetsDefault ChaincodeFunc = func(stub shim.ChaincodeStubInterface, 
 var readAssetStateHistoryDefault = func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	return DefaultClass.ReadAssetStateHistory(stub, args)
 }
-
+/*
 var updateTranCertDefault ChaincodeFunc = func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	return DefaultClass.UpdateTranCert(stub, args, "updateTranCert", []QPropNV{})
 }
 var readTranCertDefault ChaincodeFunc = func(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	return DefaultClass.ReadTranCert(stub, args)
-}
+}*/
 
 
 // RegisterDefaultRoutes registers the basic crud API for the simplest possible contract
 func RegisterDefaultRoutes() {
 	
-		fmt.Printf("ABOUT TO ADD ALL METHODS TO ROUTER in ctasset.go")
+	//	fmt.Printf("ABOUT TO ADD ALL METHODS TO ROUTER in ctasset.go")
 	AddRoute("createAsset", "invoke", DefaultClass, createAssetDefault)
 	AddRoute("replaceAsset", "invoke", DefaultClass, replaceAssetDefault)
 	AddRoute("updateAsset", "invoke", DefaultClass, updateAssetDefault)
@@ -683,8 +683,8 @@ func RegisterDefaultRoutes() {
 	AddRoute("readAsset", "query", DefaultClass, readAssetDefault)
 	AddRoute("readAssetStateHistory", "query", DefaultClass, readAssetStateHistoryDefault)
 	AddRoute("readAllAssets", "query", DefaultClass, readAllAssetsDefault)
-	AddRoute("updateTranCert", "invoke", DefaultClass, updateTranCertDefault)
-	AddRoute("readTranCert", "query", DefaultClass, readTranCertDefault)
+	//AddRoute("updateTranCert", "invoke", DefaultClass, updateTranCertDefault)
+	//AddRoute("readTranCert", "query", DefaultClass, readTranCertDefault)
 	
 	AddRule("Over Temperature Alert", DefaultClass, []AlertName{overtempAlert}, overtempRule)
 }
