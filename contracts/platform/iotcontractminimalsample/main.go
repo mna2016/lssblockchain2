@@ -19,6 +19,7 @@ Kim Letkeman - Initial Contribution
 package main
 
 import (
+	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	iot "github.com/mna2016/lssblockchain2/contracts/platform/iotcontractplatform"
 )
@@ -40,7 +41,8 @@ func main() {
 	//iot.SetContractLogger(log)
 	err := shim.Start(new(SimpleChaincode))
 	if err != nil {
-		log.Infof("ERROR starting Simple Chaincode: %s", err)
+		//log.Infof("ERROR starting Simple Chaincode: %s", err)
+		fmt.Printf("ERROR starting Simple Chaincode: %s", err)
 	}
 }
 
