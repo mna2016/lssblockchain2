@@ -34,10 +34,10 @@ type SimpleChaincode struct {
 const CONTRACTVERSION = "0.1"
 
 // Logger for the cthistory package
-var log = shim.NewLogger("iotcontractsample")
+//var log = shim.NewLogger("iotcontractsample")
 
 func main() {
-	iot.SetContractLogger(log)
+	//iot.SetContractLogger(log)
 	err := shim.Start(new(SimpleChaincode))
 	if err != nil {
 		log.Infof("ERROR starting Simple Chaincode: %s", err)
