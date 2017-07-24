@@ -608,6 +608,95 @@ func (c *AssetClass) ReadTranCert(stub shim.ChaincodeStubInterface, args []strin
 }
 
 
+func (c *AssetClass) UpdateTranCert(stub shim.ChaincodeStubInterface, args []string, caller string, inject []QPropNV) ([]byte, error) {
+
+	fmt.Printf("In UpdateTranCert")
+	
+	var arg = c.NewAsset()
+	var a = c.NewAsset()
+
+	if err := arg.unmarshallEventIn(stub, args); err != nil {
+		err = fmt.Errorf("UpdateAsset for class %s could not unmarshall, err is %s", c.Name, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	assetKey, err := arg.getAssetKey()
+	if err != nil {
+		err = fmt.Errorf("UpdateAsset for class %s could not find id at %s, err is %s", c.Name, c.AssetIDPath, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	assetBytes, exists, err := c.getAssetFromWorldState(stub, assetKey)
+	if err != nil {
+		err := fmt.Errorf("UpdateAsset for class %s asset %s read from world state returned error %s", c.Name, assetKey, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	if !exists {
+		//Nihal: Disable creating asset with updateAsset transaction if asset does not exist
+		//if CanCreateOnFirstUpdate(stub) {
+		//	return c.CreateAsset(stub, args, caller, inject)
+		//}
+		err := fmt.Errorf("UpdateAsset for class %s asset %s asset does not exist", c.Name, assetKey)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	err = json.Unmarshal(assetBytes, &a)
+	if err != nil {
+		err := fmt.Errorf("UpdateAsset for class %s asset %s Unmarshal failed with err %s", c.Name, assetKey, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	// save the incoming EventIn
+	a.EventIn = arg.EventIn
+	a.FunctionIn = arg.FunctionIn
+
+	// merge the event into the state
+	astate := DeepMergeMap(*a.EventIn, *a.State)
+	a.State = &astate
+
+	if err := a.addTXNTimestampToState(stub); err != nil {
+		err = fmt.Errorf("UpdateAsset for class %s failed to add txn timestamp for %s, err is %s", c.Name, a.AssetKey, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+
+	return a.PUTAsset(stub, caller, inject)
+}
+
+// ReadAsset returns an asset from world state, intended to be returned directly to a client
+func (c *AssetClass) ReadTranCert(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
+	
+	fmt.Printf("In ReadTranCert")
+	
+	var arg = c.NewAsset()
+
+	if err := arg.unmarshallEventIn(stub, args); err != nil {
+		err := fmt.Errorf("ReadAsset for class %s could not unmarshall, err is %s", c.Name, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	assetKey, err := arg.getAssetKey()
+	if err != nil {
+		err = fmt.Errorf("ReadAsset for class %s could not find id at %s, err is %s", c.Name, c.AssetIDPath, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	assetBytes, exists, err := c.getAssetFromWorldState(stub, assetKey)
+	if err != nil {
+		err := fmt.Errorf("ReadAsset for class %s, asset %s returned error: %s", c.Name, assetKey, err)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	if !exists {
+		err := fmt.Errorf("ReadAsset for class %s, asset %s does not exist", c.Name, assetKey)
+		log.Errorf(err.Error())
+		return nil, err
+	}
+	return assetBytes, nil
+}
+
+
 //** end PDF cert change*/
 
 //********** default API ***********
