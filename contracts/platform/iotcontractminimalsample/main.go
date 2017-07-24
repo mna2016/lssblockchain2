@@ -48,16 +48,19 @@ func main() {
 
 // Init is called in deploy mode and calls the router's Init function
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Printf("$$Init called")
 	return iot.Init(stub, function, args, CONTRACTVERSION)
 }
 
 // Invoke is called in invoke mode and calls the router's Invoke function
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Printf("$$Invoke called")
 	return iot.Invoke(stub, function, args)
 }
 
 // Query is called in query mode and calls the router's Query function
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Printf("$$Query called")
 	return iot.Query(stub, function, args)
 }
 
