@@ -774,7 +774,7 @@ func RegisterDefaultRoutes() {
 	AddRoute("readAssetStateHistory", "query", DefaultClass, readAssetStateHistoryDefault)
 	AddRoute("readAllAssets", "query", DefaultClass, readAllAssetsDefault)
 	AddRoute("updateTranCert", "invoke", DefaultClass, updateTranCertDefault)
-	HFAddRoute("readTranCert", "query", DefaultClass, readTranCertDefault)
+	AddRoute("readTranCert", "query", DefaultClass, readTranCertDefault)
 	
 	AddRule("Over Temperature Alert", DefaultClass, []AlertName{overtempAlert}, overtempRule)
 }
